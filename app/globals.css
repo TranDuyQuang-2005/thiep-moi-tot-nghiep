@@ -214,13 +214,13 @@ body{color:var(--ink);background:radial-gradient(ellipse at 50% 0%,#f9fafc 0%,#e
 .gray-particle-field{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .invitation-paper section,.invitation-paper footer{position:relative;z-index:1}
 .invitation-paper section > *,.invitation-paper footer > *{position:relative;z-index:1}
-.invitation-hero{background:radial-gradient(ellipse at 50% 26%,#ffffffbd 0%,#f0f1f3bb 54%,#dfe2e5b3 100%)}
-.calendar-grid{background-color:#f8f9fabe}
-.countdown-section{background-color:#f3f4f6bd}
-.directions-section,.rsvp-section{background-color:#edf0f2bd}
-.thank-you{background-color:#e2e5e9c7}
+.invitation-hero{background:radial-gradient(ellipse at 50% 26%,#ffffff9c 0%,#f0f1f39a 54%,#dfe2e595 100%)}
+.calendar-grid{background-color:#f8f9fa9c}
+.countdown-section{background-color:#f3f4f690}
+.directions-section,.rsvp-section{background-color:#edf0f28d}
+.thank-you{background-color:#e2e5e99c}
 @media(max-width:600px){
  .invitation-hero{
-  background:radial-gradient(ellipse at 50% 22%,#ffffffbd 0%,#eceef0bf 65%,#e0e3e6b8 100%);
+  background:radial-gradient(ellipse at 50% 22%,#ffffff9c 0%,#eceef09a 65%,#e0e3e697 100%);
  }
 }
