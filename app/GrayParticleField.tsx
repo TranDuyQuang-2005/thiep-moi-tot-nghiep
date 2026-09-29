@@ -2,14 +2,14 @@
 
 import { useEffect, useRef } from "react";
 
-type Particle = { x: number; y: number; radius: number; phase: number; speed: number; drift: number; tone: number };
+type Particle = { x: number; y: number; size: number; phase: number; speed: number; drift: number; tone: number };
 
 const tones = [
   [64, 72, 82],   // charcoal gray
   [94, 104, 115], // slate gray
   [132, 142, 152],
   [176, 184, 192],
-  [225, 229, 233], // silver
+  [200, 205, 211], // silver, kept visible on the pale paper
 ];
 
 export default function GrayParticleField() {
@@ -24,6 +24,22 @@ export default function GrayParticleField() {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let width = 0, height = 0, particles: Particle[] = [], frame = 0, visible = false;
     let lastFrame = 0;
+    const startedAt = performance.now();
+    // Cache soft glows instead of creating thousands of gradients every frame.
+    const glows = tones.map((shade) => [0, 1, 2].map((size) => {
+      const radius = [5, 8, 13][size];
+      const sprite = document.createElement("canvas");
+      sprite.width = sprite.height = radius * 2;
+      const painter = sprite.getContext("2d")!;
+      const glow = painter.createRadialGradient(radius, radius, 0, radius, radius, radius);
+      glow.addColorStop(0, `rgba(${shade.join(",")},1)`);
+      glow.addColorStop(.16, `rgba(${shade.join(",")},.72)`);
+      glow.addColorStop(.43, `rgba(${shade.join(",")},.22)`);
+      glow.addColorStop(1, `rgba(${shade.join(",")},0)`);
+      painter.fillStyle = glow;
+      painter.fillRect(0, 0, sprite.width, sprite.height);
+      return sprite;
+    }));
     // Repeatable layout avoids a noticeable jump when an invitation is reopened.
     const random = (seed: number) => {
       const n = Math.sin(seed * 127.1 + 78.233) * 43758.5453;
@@ -38,14 +54,14 @@ export default function GrayParticleField() {
       canvas.width = Math.round(width * scale);
       canvas.height = Math.round(height * scale);
       context.setTransform(scale, 0, 0, scale, 0, 0);
-      const count = Math.min(650, Math.max(110, Math.round(width * height / 4100)));
+      const count = Math.min(1600, Math.max(240, Math.round(width * height / 1350)));
       particles = Array.from({ length: count }, (_, i) => ({
         x: random(i * 7 + 1) * width,
         y: random(i * 7 + 2) * height,
-        radius: random(i * 7 + 3) > .94 ? 2.1 + random(i * 7 + 4) * 1.7 : .55 + random(i * 7 + 4) * 1.1,
+        size: random(i * 7 + 3) > .94 ? 2 : random(i * 7 + 4) > .68 ? 1 : 0,
         phase: random(i * 7 + 5) * Math.PI * 2,
-        speed: .45 + random(i * 7 + 6) * 1.2,
-        drift: 1.5 + random(i * 7 + 7) * 8,
+        speed: 22 + random(i * 7 + 6) * 36,
+        drift: 3 + random(i * 7 + 7) * 11,
         tone: Math.floor(random(i * 7 + 8) * tones.length),
       }));
       draw(0);
@@ -53,31 +69,23 @@ export default function GrayParticleField() {
 
     const draw = (time: number) => {
       context.clearRect(0, 0, width, height);
-      const t = time / 1000;
+      const t = Math.max(0, time - startedAt) / 1000;
       for (const particle of particles) {
-        const pulse = (Math.sin(t * particle.speed * 2 + particle.phase) + 1) / 2;
-        const shade = tones[(particle.tone + Math.floor((t + particle.phase) / 5)) % tones.length];
-        const x = particle.x + Math.sin(t * .31 + particle.phase) * particle.drift;
-        const y = particle.y + Math.cos(t * .23 + particle.phase) * particle.drift;
-        const alpha = .24 + pulse * .55;
-        const halo = context.createRadialGradient(x, y, 0, x, y, particle.radius * 5);
-        halo.addColorStop(0, `rgba(${shade.join(",")},${alpha})`);
-        halo.addColorStop(.22, `rgba(${shade.join(",")},${alpha * .35})`);
-        halo.addColorStop(1, `rgba(${shade.join(",")},0)`);
-        context.fillStyle = halo;
-        context.beginPath();
-        context.arc(x, y, particle.radius * 5, 0, Math.PI * 2);
-        context.fill();
-        context.fillStyle = `rgba(${shade.join(",")},${Math.min(1, alpha + .12)})`;
-        context.beginPath();
-        context.arc(x, y, particle.radius * (.65 + pulse * .35), 0, Math.PI * 2);
-        context.fill();
+        const pulse = (Math.sin(t * (1.4 + particle.tone * .19) + particle.phase) + 1) / 2;
+        const tone = (particle.tone + Math.floor((t + particle.phase) / 6)) % tones.length;
+        const x = particle.x + Math.sin(t * .7 + particle.phase) * particle.drift;
+        // A steady fall; each particle returns above the top after leaving the bottom.
+        const y = (particle.y + t * particle.speed) % (height + 28) - 14;
+        const sprite = glows[tone][particle.size];
+        context.globalAlpha = .4 + pulse * .56;
+        context.drawImage(sprite, x - sprite.width / 2, y - sprite.height / 2);
       }
+      context.globalAlpha = 1;
     };
 
     const tick = (time: number) => {
       if (!visible || document.hidden || motion.matches) return;
-      if (time - lastFrame >= 32) { draw(time); lastFrame = time; }
+      if (time - lastFrame >= 40) { draw(time); lastFrame = time; }
       frame = requestAnimationFrame(tick);
     };
     const update = () => {
