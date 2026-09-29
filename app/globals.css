@@ -209,25 +209,18 @@ body{color:var(--ink);background:radial-gradient(ellipse at 50% 0%,#f9fafc 0%,#e
 .creator-grid input[type=file]::file-selector-button{background:#515d69;color:#fff;border:0;padding:8px 12px;margin-right:12px;cursor:pointer}
 @keyframes name-glow{from{filter:drop-shadow(0 0 3px #a7752570);background-position:0 0}to{filter:drop-shadow(0 0 13px #c28a3790);background-position:100% 0}}
 @media(max-width:600px){.invitation-hero h2 .graduate-name{font-size:clamp(1.7rem,calc(4.9rem - var(--name-length) * .115rem),3.9rem);line-height:1.4}}
-/* Quiet dotted paper texture across the invitation. */
-.invitation-hero{
- background-image:
-  radial-gradient(circle,#8794a343 0 1px,transparent 1.4px),
-  radial-gradient(circle,#b2a18336 0 .8px,transparent 1.2px),
-  radial-gradient(ellipse at 50% 26%,#fff 0%,#f0f1f3 54%,#dfe2e5 100%);
- background-size:24px 24px,36px 36px,auto;
- background-position:0 0,12px 16px,center;
-}
-.calendar-grid,.countdown-section,.directions-section,.rsvp-section,.thank-you{
- background-image:radial-gradient(circle,#7f8b981d 0 .8px,transparent 1.2px);
- background-size:22px 22px;
-}
-.calendar-grid{background-color:#f8f9fa}
-.countdown-section{background-color:#f3f4f6}
-.directions-section,.rsvp-section{background-color:#edf0f2}
-.thank-you{background-color:#e2e5e9}
+/* Silver and charcoal particles move behind the content, over soft gray paper. */
+.invitation-paper{position:relative;isolation:isolate;background:#e6e8eb}
+.gray-particle-field{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.invitation-paper section,.invitation-paper footer{position:relative;z-index:1}
+.invitation-paper section > *,.invitation-paper footer > *{position:relative;z-index:1}
+.invitation-hero{background:radial-gradient(ellipse at 50% 26%,#ffffffbd 0%,#f0f1f3bb 54%,#dfe2e5b3 100%)}
+.calendar-grid{background-color:#f8f9fabe}
+.countdown-section{background-color:#f3f4f6bd}
+.directions-section,.rsvp-section{background-color:#edf0f2bd}
+.thank-you{background-color:#e2e5e9c7}
 @media(max-width:600px){
  .invitation-hero{
-  background-image:radial-gradient(circle,#8794a343 0 1px,transparent 1.4px),radial-gradient(circle,#b2a18336 0 .8px,transparent 1.2px),radial-gradient(ellipse at 50% 22%,#fff 0%,#eceef0 65%,#e0e3e6 100%);
+  background:radial-gradient(ellipse at 50% 22%,#ffffffbd 0%,#eceef0bf 65%,#e0e3e6b8 100%);
  }
 }
