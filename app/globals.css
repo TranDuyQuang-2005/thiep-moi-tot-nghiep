@@ -262,3 +262,7 @@ body{background:radial-gradient(circle at 14% 12%,#fff8fc 0%,transparent 34%),ra
 .thank-you{background:radial-gradient(ellipse at 28% 25%,#fffafc87,#efc1d570 85%)}
 @media(max-width:600px){.invitation-hero{background:radial-gradient(ellipse at 50% 24%,#fffafba3,#f2d3e064 100%)}}
 @media(prefers-reduced-motion:reduce){.pink-diffusion-field i{animation:none}}
+.management-actions{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px}
+.management-actions .management-link{display:inline-block;padding:0;font:inherit;font-size:.81rem;line-height:1.5}
+.inbox-entry-active{outline:2px solid #bd799c;outline-offset:2px;background:#fff8fb}
+.manage-notice{margin:14px 0;padding:12px 14px;background:#f8e6ef;border-left:3px solid #bd799c;color:#533b4a;line-height:1.5}
