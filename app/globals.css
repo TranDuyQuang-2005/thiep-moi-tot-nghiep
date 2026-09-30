@@ -244,3 +244,21 @@ body{background:radial-gradient(circle at 14% 12%,#fff8fc 0%,transparent 34%),ra
  .invitation-hero{background:radial-gradient(ellipse at 50% 20%,#fffafbcc 0%,#f6e3eb9c 66%,#e9cbd79e 100%)}
 }
 @media(prefers-reduced-motion:reduce){.invitation-paper{animation:none}}
+/* Moving, blurred rose light passes through the translucent sections. */
+.invitation-paper{overflow:hidden;background-color:#f2d7e2}
+.pink-diffusion-field{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.pink-diffusion-field i{position:absolute;display:block;width:140%;height:27%;left:-20%;border-radius:50%;filter:blur(30px);background:radial-gradient(ellipse at center,#e7a2bdc9 0%,#f5c9d9a8 38%,#fff7fa00 72%);animation:rose-drift 16s ease-in-out infinite alternate;will-change:transform}
+.pink-diffusion-field i:nth-child(1){top:-5%;animation-duration:15s;animation-delay:-6s}
+.pink-diffusion-field i:nth-child(2){top:23%;left:-31%;background:radial-gradient(ellipse at center,#fffdfbd9 0%,#f5bcd1ba 40%,#fff7fa00 72%);animation-duration:21s;animation-delay:-12s;animation-direction:alternate-reverse}
+.pink-diffusion-field i:nth-child(3){top:50%;left:-10%;background:radial-gradient(ellipse at center,#e8a6c3bc 0%,#f9d5e2ad 44%,#fff7fa00 74%);animation-duration:18s;animation-delay:-4s}
+.pink-diffusion-field i:nth-child(4){top:77%;left:-29%;background:radial-gradient(ellipse at center,#fffdfbea 0%,#edabc5bd 40%,#fff7fa00 73%);animation-duration:23s;animation-delay:-16s;animation-direction:alternate-reverse}
+@keyframes rose-drift{from{transform:translate3d(-13%,-5%,0) scale(.84)}to{transform:translate3d(19%,8%,0) scale(1.28)}}
+.gray-particle-field{z-index:1}
+.invitation-paper section,.invitation-paper footer{z-index:2}
+.invitation-hero{background:radial-gradient(ellipse at 50% 27%,#fffafba3 0%,#f7e2eb66 56%,#efd0dc5c 100%)}
+.calendar-grid{background-color:#fff8fa78}
+.countdown-section{background:linear-gradient(135deg,#fff8fa69,#f2c8da62)}
+.directions-section,.rsvp-section{background:linear-gradient(135deg,#fff7fa66,#edbed263)}
+.thank-you{background:radial-gradient(ellipse at 28% 25%,#fffafc87,#efc1d570 85%)}
+@media(max-width:600px){.invitation-hero{background:radial-gradient(ellipse at 50% 24%,#fffafba3,#f2d3e064 100%)}}
+@media(prefers-reduced-motion:reduce){.pink-diffusion-field i{animation:none}}
