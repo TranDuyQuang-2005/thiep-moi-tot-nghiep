@@ -50,6 +50,8 @@ export default function Home() {
   const [managed, setManaged] = useState<ManagedInvite[]>([]);
   const [inbox, setInbox] = useState<{ invite: ManagedInvite; reply: Reply | null }[]>([]);
   const [inboxNotice, setInboxNotice] = useState("");
+  const [manageNotice, setManageNotice] = useState("");
+  const [activeManageCode, setActiveManageCode] = useState("");
   const [replyNotice, setReplyNotice] = useState("");
   const [sending, setSending] = useState(false);
   const [celebrate, setCelebrate] = useState(false);
@@ -73,13 +75,19 @@ export default function Home() {
       const params = new URLSearchParams(window.location.search);
       const manageCode = params.get("manage"), manageKey = params.get("key");
       if (manageCode && manageKey && /^[a-f0-9]{16}$/.test(manageCode) && /^[a-f0-9]{64}$/.test(manageKey)) {
-        fetch(`/api/invitations/${manageCode}`).then(r => r.ok ? r.json() : Promise.reject()).then((data: { recipient?: string }) => {
+        setManageNotice("Đang kiểm tra link quản lý...");
+        fetch(`/api/invitations/${manageCode}/responses`, { headers: { Authorization: `Bearer ${manageKey}` }, cache: "no-store" })
+          .then(r => { if (!r.ok) throw new Error("Link quản lý không hợp lệ hoặc đã hết hiệu lực."); return fetch(`/api/invitations/${manageCode}`); })
+          .then(r => { if (!r.ok) throw new Error("Không tìm thấy thiệp mời."); return r.json() as Promise<{ recipient?: string }>; })
+          .then((data) => {
           const item = { code: manageCode, key: manageKey, recipient: data.recipient || "Khách mời" };
           const existing = JSON.parse(localStorage.getItem("vaa-managed-invitations") || "[]") as ManagedInvite[];
           const next = [item, ...existing.filter(invite => invite.code !== manageCode)];
           localStorage.setItem("vaa-managed-invitations", JSON.stringify(next)); setManaged(next);
+          setActiveManageCode(manageCode);
+          setManageNotice(`Đang xem phản hồi riêng của ${item.recipient}. Link này đã được lưu trên trình duyệt này.`);
           window.history.replaceState(null, "", "/");
-        }).catch(() => setInboxNotice("Link quản lý thiệp không hợp lệ."));
+        }).catch((e) => setManageNotice(e instanceof Error ? e.message : "Link quản lý không hợp lệ."));
       }
     } catch { /* optional */ }
     setLoaded(true);
@@ -112,6 +120,7 @@ export default function Home() {
     setInbox(results); setInboxNotice("");
   }
   useEffect(() => { if (loaded && !guest && managed.length) void refreshInbox(managed); }, [loaded, guest, managed]);
+  useEffect(() => { if (activeManageCode) document.getElementById(`response-${activeManageCode}`)?.scrollIntoView({ behavior: "smooth", block: "center" }); }, [activeManageCode, inbox]);
 
   const update = (field: keyof Ceremony, value: string) => { setCeremony(c => ({ ...c, [field]: value.normalize("NFC") })); setShareUrl(""); setNotice(""); };
   const updateRecipient = (value: string) => { setRecipient(value.normalize("NFC")); setShareUrl(""); setNotice(""); };
@@ -197,10 +206,11 @@ export default function Home() {
       <button type="button" className="primary-action" disabled={sharing || uploadingMusic} onClick={shareInvitation}>{sharing ? "Đang tạo thiệp..." : `Gửi thiệp cho ${recipient.trim() || "khách mời"}`}</button>
       {notice && <p className="creator-notice" role="status">{notice}</p>}
       {shareUrl && <div className="share-result"><label htmlFor="share-link">Link thiệp riêng</label><input id="share-link" readOnly value={shareUrl} onFocus={e => e.target.select()} /><a href={shareUrl} target="_blank" rel="noopener noreferrer">Mở thử thiệp của người nhận ↗</a></div>}
-      <section className="owner-inbox" aria-labelledby="inbox-title"><div className="inbox-heading"><div><h2 id="inbox-title">Phản hồi khách mời</h2><p>Chỉ bạn xem được xác nhận và lời chúc trên trình duyệt đã tạo thiệp.</p></div><button type="button" onClick={() => void refreshInbox()}>Làm mới</button></div>
+      <section className="owner-inbox" aria-labelledby="inbox-title"><div className="inbox-heading"><div><h2 id="inbox-title">Phản hồi khách mời</h2><p>Thiệp và lời chúc của từng khách chỉ hiện với người có link quản lý riêng.</p></div><button type="button" onClick={() => void refreshInbox()}>Làm mới</button></div>
+        {manageNotice && <p className="manage-notice" role="status">{manageNotice}</p>}
         {inboxNotice && <p role="status">{inboxNotice}</p>}
-        {managed.length ? <div className="inbox-list">{inbox.map(({ invite, reply }) => <div className="inbox-entry" key={invite.code}><strong>{invite.recipient}</strong><span>{reply ? reply.attendance === "yes" ? "Sẽ tham dự" : reply.attendance === "maybe" ? "Chưa chắc" : "Không thể tham dự" : "Chưa có phản hồi"}</span>{reply?.message && <p>{reply.message}</p>}<button type="button" className="management-link" onClick={() => { const url = `${window.location.origin}/?manage=${invite.code}&key=${invite.key}`; void navigator.clipboard.writeText(url).then(() => setInboxNotice(`Đã sao chép link quản lý của ${invite.recipient}.`)).catch(() => setInboxNotice(`Link quản lý: ${url}`)); }}>Sao chép link quản lý riêng</button></div>)}</div> : <p className="inbox-empty">Sau khi bạn tạo thiệp cho khách, phản hồi riêng tư sẽ hiển thị tại đây.</p>}
-        <p className="inbox-hint">Giữ kín link quản lý và lưu lại nếu muốn xem phản hồi trên thiết bị khác. Khách mời chỉ nhận link thiệp riêng.</p>
+        {managed.length ? <div className="inbox-list">{inbox.map(({ invite, reply }) => { const managementUrl = `/?manage=${invite.code}&key=${invite.key}`; return <div className={`inbox-entry${activeManageCode === invite.code ? " inbox-entry-active" : ""}`} id={`response-${invite.code}`} key={invite.code}><strong>{invite.recipient}</strong><span>{reply ? reply.attendance === "yes" ? "Sẽ tham dự" : reply.attendance === "maybe" ? "Chưa chắc" : "Không thể tham dự" : "Chưa có phản hồi"}</span>{reply?.message && <p>{reply.message}</p>}<div className="management-actions"><a className="management-link" href={managementUrl}>Mở phản hồi riêng ↗</a><button type="button" className="management-link" onClick={() => { const url = new URL(managementUrl, window.location.origin).toString(); void navigator.clipboard.writeText(url).then(() => setInboxNotice(`Đã sao chép link xem phản hồi của ${invite.recipient}.`)).catch(() => setInboxNotice(`Link xem phản hồi: ${url}`)); }}>Sao chép link xem trên máy khác</button></div></div>; })}</div> : <p className="inbox-empty">Sau khi bạn tạo thiệp cho khách, phản hồi riêng tư sẽ hiển thị tại đây.</p>}
+        <p className="inbox-hint">Link quản lý dùng để xem xác nhận và lời chúc trên thiết bị khác. Giữ kín link này; khách mời chỉ nhận link thiệp riêng.</p>
       </section>
     </section>}
     {guest && celebrate && <div className="confetti" aria-hidden="true">{Array.from({ length: 54 }, (_, i) => <i key={i} style={{ "--i": i, "--x": `${(i * 47 + 13) % 100}vw`, "--delay": `${(i * 13) % 17 * .09}s`, "--duration": `${3 + (i % 6) * .28}s` } as React.CSSProperties} />)}</div>}
