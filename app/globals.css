@@ -132,6 +132,337 @@ body{color:var(--ink);background:radial-gradient(circle at 50% 8%,#55565b,#20212
 .invitation-paper{background:#292b30;box-shadow:inset 0 0 0 1px #a88957;color:#f4efdf}
 .invitation-hero{background:radial-gradient(ellipse at 50% 28%,#55545a 0%,#303238 50%,#1d2025 100%)}
 .invitation-hero:before,.invitation-hero:after,.floral-corner{color:#e7c78a}
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Playfair+Display:wght@400;600;700&display=swap');
+@import "tailwindcss";
+@font-face{font-family:InvitationSerif;src:url('/fonts/DejaVuSerif.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:InvitationSerif;src:url('/fonts/DejaVuSerif-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+@font-face{font-family:InvitationSans;src:url('/fonts/DejaVuSans.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:InvitationSans;src:url('/fonts/DejaVuSans-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+:root{--ink:#272b2e;--cream:#fffaf0;--gold:#ad8756;--line:#e3d5bd}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:InvitationSans,sans-serif;background:radial-gradient(circle at 13% 4%,#344a53,#122934 55%,#0b1d27)}
+button,input,textarea,select{font:inherit}
+button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #dcb965;outline-offset:3px}
+.invitation-app{padding:44px 22px 80px;min-height:100vh}
+.loading{display:grid;place-content:center;min-height:100vh;color:white;text-align:center;padding:30px}
+.creator{max-width:990px;margin:0 auto 38px;padding:28px 32px 32px;background:#fdf9f0;border:1px solid #c3a36e;box-shadow:0 20px 65px #0004}
+.creator-heading{display:flex;align-items:center;gap:24px;border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:24px}
+.creator-heading img{width:68px;height:68px;object-fit:contain}
+.creator-heading span{font-weight:700;font-size:.73rem;letter-spacing:.12em;color:#8c6e3f}
+.creator-heading h1{font-family:InvitationSerif,serif;font-weight:400;font-size:clamp(1.6rem,3vw,2.4rem);margin:6px 0}
+.creator-heading p{margin:0;color:#58636a;line-height:1.5}
+.creator-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 20px}
+.creator-grid label{display:flex;flex-direction:column;gap:8px;font-weight:700;font-size:.9rem}
+.creator-grid .wide{grid-column:1/-1}
+.creator-grid input,.creator-grid textarea,.share-result input{width:100%;padding:12px 14px;border:1px solid #b9b1a0;border-radius:0;background:white;color:#22323a;min-height:47px}
+.creator-grid textarea{resize:vertical}
+.primary-action{border:0;background:#22272a;color:#fff;padding:15px 25px;cursor:pointer;font-weight:700;transition:transform .2s,background .2s;line-height:1.4}
+.primary-action:hover{transform:translateY(-2px);background:#3a4145}
+.primary-action:disabled{opacity:.65;cursor:wait}
+.creator>.primary-action{margin-top:23px}
+.creator-notice,.reply-notice{color:#76532d;line-height:1.5;margin:14px 0}
+.share-result{display:flex;flex-direction:column;gap:8px;margin-top:20px;max-width:680px}
+.share-result label{font-size:.85rem;font-weight:700}
+.share-result a{color:#7a5b30;text-decoration:underline;text-underline-offset:4px}
+.paper-shell{max-width:710px;margin:auto;padding:13px;background:#e0c8a2;box-shadow:0 30px 90px #0007}
+.invitation-paper{background:var(--cream);box-shadow:inset 0 0 0 1px #d2c2a7}
+.invitation-paper section{position:relative}
+.invitation-hero{text-align:center;min-height:810px;padding:48px clamp(24px,6vw,70px) 35px;background:radial-gradient(circle at center,#fffdf6 20%,#fff7e9 100%);overflow:hidden}
+.invitation-hero:before,.invitation-hero:after{content:"✧  ✿  ✧";position:absolute;color:#b69b74;opacity:.58;font-size:2rem;letter-spacing:.8em;top:29%;writing-mode:vertical-rl}
+.invitation-hero:before{left:15px}.invitation-hero:after{right:15px}
+.floral-corner{position:absolute;top:14px;color:#bc9b65;font-size:1.3rem;letter-spacing:.25em;opacity:.65}
+.floral-left{left:20px;transform:rotate(-15deg)}.floral-right{right:20px;transform:rotate(15deg)}
+.micro-title{font-size:.72rem;letter-spacing:.22em;color:#86673e;font-weight:700;margin:0 0 20px}
+.hero-logo{width:86px;height:86px;margin:0 auto 22px;border:1px solid #d7be91;border-radius:50%;display:grid;place-items:center;background:#fffaf0;box-shadow:0 0 0 7px #d7be9130}
+.hero-logo img{width:73px;height:73px;object-fit:contain}
+.overline,.honour,.degree-line{letter-spacing:.19em;font-size:.83rem;font-weight:700;color:#8c714c}
+.overline{margin:0 0 13px}
+.invitation-hero h2{font-family:InvitationSerif,serif;font-weight:400;font-size:clamp(1.7rem,4.5vw,2.75rem);line-height:1.55;margin:0 0 23px;text-wrap:balance}
+.invitation-hero h2 span{color:#9c7543}
+.honour{margin:0 0 10px}
+.recipient-name{font-family:InvitationSerif,serif;font-size:clamp(1.65rem,4.5vw,2.7rem);font-weight:700;margin:0;overflow-wrap:anywhere;line-height:1.5}
+.dotted-rule{width:min(310px,75%);border-bottom:2px dotted #ab9169;margin:9px auto 24px}
+.hero-date,.hero-location{line-height:1.7;margin:5px auto;font-size:1rem;font-weight:600;max-width:38ch}
+.hero-date span{color:var(--gold)}
+.graduation-symbol{height:160px;display:flex;justify-content:center;align-items:center;gap:26px;color:#c2a365}
+.graduation-symbol strong{font-size:5.5rem;font-weight:normal;animation:cap-float 4s ease-in-out infinite;filter:drop-shadow(0 12px 8px #0002)}
+.graduation-symbol span{font-size:1.9rem;animation:sparkle 3s ease-in-out infinite}
+.degree-line{margin:0}
+.personal-note{font-family:InvitationSerif,serif;font-style:italic;line-height:1.8;max-width:37ch;margin:23px auto 0;color:#55524d}
+.hero-scroll{margin:35px auto 0;color:#8b6d42;font-weight:700;font-size:.68rem;letter-spacing:.21em}
+.hero-scroll span{display:block;font-size:1.3rem;animation:scroll-hint 1.8s ease-in-out infinite}
+.month-ribbon{background:#22272a;color:#fff;padding:19px 28px;display:flex;justify-content:space-between;font-size:1.3rem;font-weight:700;letter-spacing:.08em}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:15px 24px 23px;background:#fff;row-gap:4px;text-align:center}
+.weekday{border-bottom:1px solid #c8c5c0;padding:10px 0 15px;font-weight:700;font-size:.9rem}
+.calendar-day{height:48px;display:grid;place-items:center;position:relative;font-size:1rem}
+.marked-day{font-weight:700;color:#fff;isolation:isolate}
+.marked-day:before{content:"♥";position:absolute;z-index:-1;top:50%;left:50%;transform:translate(-50%,-53%);font-size:3.2rem;color:#c77380;filter:drop-shadow(0 4px 4px #c7738055)}
+.countdown-section,.directions-section,.rsvp-section{padding:44px clamp(24px,6vw,62px);text-align:center}
+.countdown-section{background:#fffaf1}
+.invitation-paper h3{font-family:InvitationSerif,serif;font-size:clamp(1.4rem,4vw,2rem);font-weight:700;line-height:1.45;margin:0 0 26px}
+.countdown-row{display:flex;justify-content:center;gap:12px;border-top:2px dotted #d8c8ab;border-bottom:2px dotted #d8c8ab;padding:23px 0}
+.countdown-unit{min-width:68px;display:flex;flex-direction:column;align-items:center;gap:9px}
+.countdown-unit strong{min-width:65px;background:#24282b;color:#fff;padding:12px 7px;font-size:1.55rem;font-weight:500;line-height:1}
+.countdown-unit span{font-size:.82rem;color:#746a5e}
+.event-today,.placeholder-copy{font-size:.92rem;color:#736759;margin:18px 0 0}
+.directions-section{border-top:1px solid #eadbc4}
+.directions-section>p{line-height:1.65;font-weight:700;margin:0 0 18px}
+.directions-section>p span{font-weight:400;color:#666}
+.directions-section iframe{width:100%;height:300px;border:1px solid #d4c4ac;background:#e9e3d9}
+.map-action{display:inline-block;background:#24282b;color:#fff;border-radius:6px;text-decoration:none;padding:14px 25px;margin:20px auto 0;font-weight:700}
+.rsvp-section{border-top:1px solid #eadbc4}
+.rsvp-form,.rsvp-preview{text-align:left;display:flex;flex-direction:column;gap:10px}
+.rsvp-form label,.rsvp-preview label{font-size:.88rem;font-weight:700;margin-top:8px}
+.rsvp-form input,.rsvp-form select,.rsvp-form textarea,.rsvp-preview input,.rsvp-preview select,.rsvp-preview textarea{width:100%;border:1px solid #d1c8b9;background:white;min-height:48px;padding:12px;color:#263138;display:block;margin-top:8px}
+.rsvp-form textarea{resize:vertical}
+.rsvp-form .primary-action{margin-top:5px}
+.public-note,.preview-note{font-size:.8rem;color:#756d62;line-height:1.55;margin:1px 0}
+.rsvp-preview input:disabled,.rsvp-preview select:disabled,.rsvp-preview textarea:disabled{opacity:1;background:#f6f0e7;color:#776f63}
+.rsvp-preview .primary-action{margin-top:8px}
+.owner-inbox{margin-top:32px;padding-top:25px;border-top:1px solid var(--line)}
+.inbox-heading{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.inbox-heading h2{font-family:InvitationSerif,serif;font-size:1.45rem;margin:0 0 8px}
+.inbox-heading p,.inbox-hint,.inbox-empty{font-size:.85rem;line-height:1.6;color:#655d51;margin:0}
+.inbox-heading button{background:#fff;border:1px solid #b7a079;padding:9px 13px;cursor:pointer;white-space:nowrap}
+.inbox-list{display:grid;gap:10px;margin-top:18px}
+.inbox-entry{padding:15px;border:1px solid var(--line);background:#fff;overflow-wrap:anywhere}
+.inbox-entry strong{display:block}.inbox-entry span{display:block;font-size:.84rem;color:#80633c;margin-top:5px}
+.inbox-entry p{line-height:1.6;margin:12px 0 0;white-space:pre-wrap}
+.management-link{border:0;background:transparent;color:#77572f;text-decoration:underline;text-underline-offset:3px;padding:9px 0 0;cursor:pointer;text-align:left;font-size:.81rem}
+.inbox-empty{margin-top:15px}.inbox-hint{margin-top:17px}
+.thank-you{text-align:center;padding:45px 35px 60px}
+.thank-you>span{font-size:1.5rem;color:#ad8756}
+.thank-you h3{font-family:InvitationSerif,serif;font-size:1.9rem;font-style:italic;margin:13px 0}
+.thank-you p{font-family:InvitationSerif,serif;font-style:italic;line-height:1.8;max-width:43ch;margin:0 auto 30px}
+.thank-you small{color:#927550;letter-spacing:.13em;line-height:1.6}
+@keyframes cap-float{50%{transform:translateY(-10px)}}@keyframes sparkle{50%{opacity:.3;transform:scale(.75)}}@keyframes scroll-hint{50%{transform:translateY(6px)}}
+@media(max-width:600px){
+ .invitation-app{padding:0 0 35px;background:#fffaf0}
+ .creator{border:0;box-shadow:none;margin:0;padding:25px 20px}
+ .creator-heading{gap:14px}.creator-heading img{width:51px;height:51px}
+ .creator-grid{grid-template-columns:1fr;gap:14px}.creator-grid .wide{grid-column:auto}
+ .paper-shell{padding:0;box-shadow:none}
+ .invitation-hero{min-height:0;padding:45px 31px 31px}
+ .invitation-hero:before,.invitation-hero:after{display:none}
+ .floral-corner{font-size:.9rem}
+ .micro-title{font-size:.63rem}
+ .graduation-symbol{height:130px}.graduation-symbol strong{font-size:4.6rem}
+ .calendar-grid{padding:10px 10px 22px}
+ .calendar-day{height:43px;font-size:.9rem}.marked-day:before{font-size:2.9rem}
+ .month-ribbon{font-size:1.1rem}
+ .countdown-section,.directions-section,.rsvp-section{padding:35px 22px}
+ .countdown-row{gap:5px}.countdown-unit{min-width:0;flex:1}.countdown-unit strong{min-width:0;width:100%;font-size:1.2rem;padding:11px 3px}.countdown-unit span{font-size:.72rem}
+ .directions-section iframe{height:280px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+/* Charcoal and champagne graduation edition */
+:root{--ink:#f4efe4;--cream:#27292e;--gold:#d8b779;--line:#73695b}
+body{color:var(--ink);background:radial-gradient(circle at 50% 8%,#55565b,#202126 64%,#15161a)}
+.creator{color:#28282b;background:#f4efe5;border-color:#b8a17d}
+.creator-grid label small{font-size:.76rem;font-weight:400;line-height:1.55;color:#5d5954}
+.paper-shell{background:linear-gradient(125deg,#d7b673,#f6e5b8 27%,#886f4c 52%,#e9cc92 80%,#af8b59);padding:10px;box-shadow:0 36px 120px #0009}
+.invitation-paper{background:#292b30;box-shadow:inset 0 0 0 1px #a88957;color:#f4efdf}
+.invitation-hero{background:radial-gradient(ellipse at 50% 28%,#55545a 0%,#303238 50%,#1d2025 100%)}
+.invitation-hero:before,.invitation-hero:after,.floral-corner{color:#e7c78a}
+.hero-logo{background:#fdf9ef;box-shadow:0 0 0 7px #e6c9902b,0 0 42px #e4be7599}
+.micro-title,.overline,.honour,.degree-line,.hero-scroll{color:#e8c88c}
+.invitation-hero h2{font-family:InvitationSerif,Georgia,serif;font-weight:400;letter-spacing:-.035em;font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.45}
+.invitation-hero h2 .graduate-name{display:block;font-family:'Brush Script MT','URW Chancery L','Apple Chancery',InvitationSerif,serif;font-style:italic;font-weight:700;letter-spacing:-.055em;line-height:1.2;font-size:clamp(3rem,9vw,6rem);max-width:100%;margin:12px auto 4px;overflow-wrap:anywhere;color:#f5dfad;text-shadow:0 2px 0 #986e3d,0 8px 24px #e3b95788,0 0 48px #eaca8288;animation:name-reveal 1.4s both,name-glow 4s ease-in-out infinite alternate;background:linear-gradient(110deg,#b98c4a 0%,#fff5d6 42%,#d9ac65 65%,#fff0c1 100%);background-size:230% 100%;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.invitation-hero h2 .graduate-name{font-family:'Dancing Script',InvitationSerif,serif}
+.invitation-hero h2,.recipient-name,.invitation-paper h3,.thank-you p{font-family:'Playfair Display',InvitationSerif,serif}
+.recipient-name{color:#f7dfac;text-shadow:0 0 22px #e2be7a88}
+.hero-date,.hero-location{color:#f3ebdb}
+.personal-note{color:#e0d4c1}
+.graduation-symbol{color:#f5d68e}
+.calendar-grid{background:#32343a}
+.month-ribbon,.countdown-unit strong{background:#17191e;color:#f4dfaa}
+.weekday{border-color:#776a58;color:#e6c585}
+.marked-day:before{color:#e9aa86;filter:drop-shadow(0 0 12px #ffc092aa)}
+.countdown-section{background:#292b30}
+.countdown-row{border-color:#736a5d}
+.countdown-unit span,.event-today,.placeholder-copy{color:#d3c3a8}
+.directions-section,.rsvp-section{border-color:#6c6254;background:#303136}
+.directions-section>p span,.public-note,.preview-note{color:#d6c6ac}
+.map-action{background:#d9b877;color:#24252a}
+.rsvp-form label,.rsvp-preview label{color:#f0dfc5}
+.thank-you{background:#24262b}.thank-you>span,.thank-you small{color:#e0c083}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
+.confetti i{position:absolute;left:var(--x);top:-10vh;width:10px;height:18px;background:#edc676;border-radius:2px;opacity:0;animation:confetti-fall var(--duration) var(--delay) ease-in forwards}
+.confetti i:nth-child(4n){background:#f4ebdb;width:7px;height:12px}
+.confetti i:nth-child(4n + 1){background:#c2889d;border-radius:50%;height:10px}
+.confetti i:nth-child(4n + 2){background:#9bbdc1;width:6px;height:16px}
+@keyframes confetti-fall{0%{transform:translate3d(0,-12vh,0) rotate(0);opacity:1}85%{opacity:1}100%{transform:translate3d(calc((var(--i) - 25) * .4vw),110vh,0) rotate(960deg);opacity:0}}
+@keyframes name-reveal{from{opacity:0;transform:translateY(23px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes name-glow{from{filter:drop-shadow(0 0 5px #d0a26055);background-position:0 0}to{filter:drop-shadow(0 0 22px #ffde9499);background-position:100% 0}}
+@media(max-width:600px){.invitation-app{background:#24262b}.paper-shell{padding:5px}.invitation-hero{padding-top:50px}.invitation-hero h2 .graduate-name{font-size:clamp(2.65rem,10vw,4.8rem)}}
+@media(prefers-reduced-motion:reduce){.confetti{display:none}}
+/* Light gray palette: platinum, silver and soft charcoal */
+:root{--ink:#252b34;--cream:#f3f4f6;--gold:#646f7b;--line:#c5c9ce}
+body{color:var(--ink);background:radial-gradient(ellipse at 50% 0%,#f9fafc 0%,#e4e6ea 51%,#cbd0d6 100%)}
+.creator{background:#f8f9fa;border-color:#c4c8ce;box-shadow:0 18px 56px #26303d24}
+.creator-heading span,.creator-notice,.reply-notice,.share-result a,.management-link{color:#4b5b6c}
+.paper-shell{background:linear-gradient(135deg,#a5abb2,#fafbfc 20%,#c3c8ce 49%,#f8f9fa 77%,#8c949d);box-shadow:0 28px 85px #2733413b}
+.invitation-paper{color:#282f38;background:#f2f3f5;box-shadow:inset 0 0 0 1px #bec2c8}
+.invitation-hero{background:radial-gradient(ellipse at 50% 26%,#ffffff 0%,#f0f1f3 54%,#dfe2e5 100%)}
+.invitation-hero:before,.invitation-hero:after,.floral-corner{color:#87919a}
+.hero-logo{background:#fff;box-shadow:0 0 0 7px #aab2bc2b,0 0 36px #8d99a853;border-color:#bcc3ca}
+.micro-title,.overline,.honour,.degree-line,.hero-scroll{color:#586674}
+.invitation-hero h2{color:#262e39}
+.invitation-hero h2 .graduate-name{color:#3a4653;text-shadow:0 2px 0 #f9fafb,0 9px 22px #64758955,0 0 35px #a0afbc88;background:linear-gradient(115deg,#3b4855 0%,#84919e 28%,#26323d 53%,#9daab5 76%,#394654 100%);background-size:230% 100%;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.recipient-name{color:#39495a;text-shadow:0 0 17px #a7b4c799}
+.dotted-rule{border-color:#9fa6ae}
+.hero-date,.hero-location{color:#333d49}
+.personal-note{color:#4e5964}
+.graduation-symbol{color:#7e8995}
+.calendar-grid{background:#f8f9fa}
+.month-ribbon,.countdown-unit strong{background:#4b5662;color:#fff}
+.weekday{border-color:#c3c7cd;color:#465466}
+.calendar-day{color:#303946}.marked-day{color:#fff}
+.marked-day:before{color:#697b90;filter:drop-shadow(0 0 9px #8095a98c)}
+.marked-day:before{color:#d62845;filter:drop-shadow(0 3px 7px #d6284566)}
+.countdown-section{background:#f3f4f6}
+.countdown-row{border-color:#b9c0c8}
+.countdown-unit span,.event-today,.placeholder-copy{color:#566372}
+.directions-section,.rsvp-section{border-color:#cbd0d5;background:#edf0f2}
+.directions-section>p span,.public-note,.preview-note{color:#53606d}
+.map-action{background:#4c5b6b;color:white}
+.rsvp-form label,.rsvp-preview label{color:#303c49}
+.rsvp-form input,.rsvp-form select,.rsvp-form textarea{border-color:#bdc5cc}
+.thank-you{background:#e2e5e9}.thank-you>span,.thank-you small{color:#536273}
+.confetti i{background:#9daab9}.confetti i:nth-child(4n){background:#e7edf3}.confetti i:nth-child(4n + 1){background:#a2aab5}.confetti i:nth-child(4n + 2){background:#6b8395}
+@keyframes name-glow{from{filter:drop-shadow(0 0 4px #8ca0b466);background-position:0 0}to{filter:drop-shadow(0 0 18px #9caebeaa);background-position:100% 0}}
+@media(max-width:600px){.invitation-app{background:#e7e9ec}.paper-shell{box-shadow:none}.invitation-hero{background:radial-gradient(ellipse at 50% 22%,#fff 0%,#eceef0 65%,#e0e3e6 100%)}}
+/* Gold lettering with fluid sizing for names; soft gray RSVP controls. */
+.invitation-hero h2 .graduate-name{display:block;width:100%;max-width:100%;font-size:clamp(2rem,calc(6rem - var(--name-length) * .13rem),5rem);line-height:1.38;letter-spacing:-.025em;overflow-wrap:normal;word-break:normal;text-wrap:balance;padding:.06em .05em .18em;margin:4px auto 0;color:#75501d;background:linear-gradient(105deg,#765119 0%,#a97725 25%,#6f4917 49%,#bd8b36 75%,#795218 100%);background-size:220% 100%;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 2px 2px #fff9;animation:name-reveal 1.4s both,name-glow 4s ease-in-out infinite alternate}
+.rsvp-form input,.rsvp-form select,.rsvp-form textarea,.rsvp-preview input,.rsvp-preview select,.rsvp-preview textarea{background:#dcdcdc;border:1px solid #a8b0b7;color:#26313b;border-radius:4px}
+.rsvp-form input::placeholder,.rsvp-form textarea::placeholder,.rsvp-preview input::placeholder,.rsvp-preview textarea::placeholder{color:#596572}
+.rsvp-preview input:disabled,.rsvp-preview select:disabled,.rsvp-preview textarea:disabled{background:#dcdcdc;color:#47525d;opacity:1}
+.creator-grid input[type=file]{padding:9px 12px;cursor:pointer}
+.creator-grid input[type=file]::file-selector-button{background:#515d69;color:#fff;border:0;padding:8px 12px;margin-right:12px;cursor:pointer}
+@keyframes name-glow{from{filter:drop-shadow(0 0 3px #a7752570);background-position:0 0}to{filter:drop-shadow(0 0 13px #c28a3790);background-position:100% 0}}
+@media(max-width:600px){.invitation-hero h2 .graduate-name{font-size:clamp(1.7rem,calc(4.9rem - var(--name-length) * .115rem),3.9rem);line-height:1.4}}
+/* Silver and charcoal particles move behind the content, over soft gray paper. */
+.invitation-paper{position:relative;isolation:isolate;background:#e6e8eb}
+.gray-particle-field{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.invitation-paper section,.invitation-paper footer{position:relative;z-index:1}
+.invitation-paper section > *,.invitation-paper footer > *{position:relative;z-index:1}
+.invitation-hero{background:radial-gradient(ellipse at 50% 26%,#ffffff9c 0%,#f0f1f39a 54%,#dfe2e595 100%)}
+.calendar-grid{background-color:#f8f9fa9c}
+.countdown-section{background-color:#f3f4f690}
+.directions-section,.rsvp-section{background-color:#edf0f28d}
+.thank-you{background-color:#e2e5e99c}
+@media(max-width:600px){
+ .invitation-hero{
+  background:radial-gradient(ellipse at 50% 22%,#ffffff9c 0%,#eceef09a 65%,#e0e3e697 100%);
+ }
+}
+/* Pastel rose light scatters softly through the paper beneath silver dust. */
+body{background:radial-gradient(circle at 14% 12%,#fff8fc 0%,transparent 34%),radial-gradient(circle at 86% 34%,#f5dce7 0%,transparent 42%),linear-gradient(145deg,#f9e8ef,#eed3df 55%,#f7e4ec)}
+.creator{background:#fff8fbee;border-color:#dec8d2;box-shadow:0 18px 56px #77546626}
+.paper-shell{background:linear-gradient(135deg,#d7c7d0,#faf7f9 20%,#c3c6d0 49%,#fff3f7 77%,#a9a8b4)}
+.invitation-paper{
+ background-color:#f5e4eb;
+ background-image:radial-gradient(ellipse 64% 23% at 8% 8%,#fff9fce3 0%,transparent 90%),radial-gradient(ellipse 66% 25% at 94% 25%,#ebbfcee0 0%,transparent 88%),radial-gradient(ellipse 62% 21% at 7% 49%,#fbe1eac9 0%,transparent 92%),radial-gradient(ellipse 64% 25% at 90% 72%,#f0cad9db 0%,transparent 90%),radial-gradient(ellipse 60% 24% at 22% 96%,#fff8fbe0 0%,transparent 90%);
+ background-size:110% 110%;animation:pink-diffusion 24s ease-in-out infinite alternate;
+}
+.invitation-hero{background:radial-gradient(ellipse at 48% 22%,#fffafbc7 0%,#f7e6ed96 56%,#eacbd79e 100%)}
+.calendar-grid{background-color:#fff8fac4}
+.countdown-section{background:linear-gradient(130deg,#fff7f9a3,#f3dce6a0)}
+.directions-section,.rsvp-section{background:linear-gradient(125deg,#f9e9ef9c,#f2dce59c);border-color:#decbd3}
+.thank-you{background:radial-gradient(ellipse at 28% 25%,#fff8fbd4,#efd8e3aa 85%)}
+@keyframes pink-diffusion{from{background-position:0% 0%}to{background-position:100% 100%}}
+@media(max-width:600px){
+ .invitation-app{background:#f4e2e9}
+ .invitation-hero{background:radial-gradient(ellipse at 50% 20%,#fffafbcc 0%,#f6e3eb9c 66%,#e9cbd79e 100%)}
+}
+@media(prefers-reduced-motion:reduce){.invitation-paper{animation:none}}
+/* Moving, blurred rose light passes through the translucent sections. */
+.invitation-paper{overflow:hidden;background-color:#f2d7e2}
+.pink-diffusion-field{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.pink-diffusion-field i{position:absolute;display:block;width:140%;height:27%;left:-20%;border-radius:50%;filter:blur(30px);background:radial-gradient(ellipse at center,#e7a2bdc9 0%,#f5c9d9a8 38%,#fff7fa00 72%);animation:rose-drift 16s ease-in-out infinite alternate;will-change:transform}
+.pink-diffusion-field i:nth-child(1){top:-5%;animation-duration:15s;animation-delay:-6s}
+.pink-diffusion-field i:nth-child(2){top:23%;left:-31%;background:radial-gradient(ellipse at center,#fffdfbd9 0%,#f5bcd1ba 40%,#fff7fa00 72%);animation-duration:21s;animation-delay:-12s;animation-direction:alternate-reverse}
+.pink-diffusion-field i:nth-child(3){top:50%;left:-10%;background:radial-gradient(ellipse at center,#e8a6c3bc 0%,#f9d5e2ad 44%,#fff7fa00 74%);animation-duration:18s;animation-delay:-4s}
+.pink-diffusion-field i:nth-child(4){top:77%;left:-29%;background:radial-gradient(ellipse at center,#fffdfbea 0%,#edabc5bd 40%,#fff7fa00 73%);animation-duration:23s;animation-delay:-16s;animation-direction:alternate-reverse}
+@keyframes rose-drift{from{transform:translate3d(-13%,-5%,0) scale(.84)}to{transform:translate3d(19%,8%,0) scale(1.28)}}
+.gray-particle-field{z-index:1}
+.invitation-paper section,.invitation-paper footer{z-index:2}
+.invitation-hero{background:radial-gradient(ellipse at 50% 27%,#fffafba3 0%,#f7e2eb66 56%,#efd0dc5c 100%)}
+.calendar-grid{background-color:#fff8fa78}
+.countdown-section{background:linear-gradient(135deg,#fff8fa69,#f2c8da62)}
+.directions-section,.rsvp-section{background:linear-gradient(135deg,#fff7fa66,#edbed263)}
+.thank-you{background:radial-gradient(ellipse at 28% 25%,#fffafc87,#efc1d570 85%)}
+@media(max-width:600px){.invitation-hero{background:radial-gradient(ellipse at 50% 24%,#fffafba3,#f2d3e064 100%)}}
+@media(prefers-reduced-motion:reduce){.pink-diffusion-field i{animation:none}}
+.management-actions{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px}
+.management-actions .management-link{display:inline-block;padding:0;font:inherit;font-size:.81rem;line-height:1.5}
+.inbox-entry-active{outline:2px solid #bd799c;outline-offset:2px;background:#fff8fb}
+.manage-notice{margin:14px 0;padding:12px 14px;background:#f8e6ef;border-left:3px solid #bd799c;color:#533b4a;line-height:1.5}
+
+/* Private response theatre */
+.owner-inbox-compact{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px;border:1px solid #dec7d2;background:linear-gradient(120deg,#fff9fc,#f4e2eb);border-radius:12px}
+.owner-inbox-compact h2{font-family:InvitationSerif,serif;margin:0 0 8px;font-size:1.35rem}
+.owner-inbox-compact p{margin:0;color:#645b62;line-height:1.5;font-size:.85rem}
+.response-launch{white-space:nowrap;text-decoration:none;display:inline-block;text-align:center}
+.wishes-page{min-height:100vh;position:relative;isolation:isolate;overflow:hidden;color:#543c4c;background:radial-gradient(ellipse at 12% 5%,#fffafc 0%,transparent 32%),radial-gradient(ellipse at 83% 13%,#ecc9db 0%,transparent 38%),linear-gradient(145deg,#f8edf3 0%,#e6cbd9 52%,#f8eaf1 100%);padding:30px clamp(15px,3vw,52px) 18px}
+.wishes-page:before,.wishes-page:after{content:"";position:absolute;z-index:-1;pointer-events:none;width:54vw;height:54vw;border-radius:50%;filter:blur(60px);animation:wishes-glow 18s ease-in-out infinite alternate}
+.wishes-page:before{top:-20%;left:-15%;background:#fff8fcc9}.wishes-page:after{bottom:-30%;right:-18%;background:#d99fbb73;animation-delay:-9s}
+.wishes-grain{position:absolute;inset:0;pointer-events:none;opacity:.38;background-image:radial-gradient(#a8688a35 .65px,transparent .65px);background-size:22px 22px}
+.wishes-header,.wishes-intro,.wishes-frame,.wishes-footer,.wishes-alert{position:relative;z-index:1;max-width:1500px;margin-left:auto;margin-right:auto}
+.wishes-header{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.wishes-brand{display:flex;align-items:center;gap:16px}.wishes-mark{font-size:2.1rem;color:#b17697;text-shadow:0 0 20px #d795b2}
+.wishes-brand small,.wish-detail-kicker,.wish-drawer-top small{font-size:.67rem;font-weight:700;letter-spacing:.25em;color:#995e80}
+.wishes-brand h1{font-family:'Playfair Display',InvitationSerif,serif;font-size:clamp(1.4rem,2.25vw,2.45rem);font-weight:600;margin:5px 0 0;line-height:1.3}
+.wishes-brand h1 span{color:#b77494}
+.wishes-toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.wishes-toolbar button,.wish-refresh{border:1px solid #ca9db5a6;border-radius:999px;background:#fff8fbcc;color:#633f55;padding:11px 16px;cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s;white-space:nowrap;font-size:.79rem;font-weight:700;box-shadow:0 4px 16px #9f648222}
+.wishes-toolbar button:hover,.wish-refresh:hover{transform:translateY(-2px);background:#fff;box-shadow:0 7px 18px #9f64823d}
+.wishes-toolbar button span{margin-left:6px;min-width:20px;display:inline-block;background:#b982a0;color:white;border-radius:99px}
+.wishes-intro{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-top:19px;margin-bottom:13px;font-size:.8rem;color:#775c6e}
+.wishes-intro p{margin:0}.wishes-intro span{white-space:nowrap}
+.wishes-frame{height:min(75vh,850px);min-height:570px;border:1px solid #e6c6d7;outline:8px solid #fff9f65c;box-shadow:0 24px 80px #855c7d45,inset 0 0 0 1px #fffbfc8c;overflow:hidden;border-radius:22px;background:radial-gradient(ellipse at 20% 16%,#fff9fbd9 0%,transparent 41%),radial-gradient(ellipse at 80% 75%,#dba8c4aa 0%,transparent 50%),linear-gradient(120deg,#f3d8e5,#efd5e3 38%,#f6e5ec 73%,#dcb6cc);position:relative}
+.wishes-frame:before{content:"";position:absolute;inset:-50%;pointer-events:none;background:conic-gradient(from 60deg at 55% 50%,transparent 0deg,#fff9fc74 65deg,transparent 125deg,#d398ba55 205deg,transparent 280deg);filter:blur(56px);animation:stage-light 20s linear infinite}
+.wishes-frame:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 80px #ae809b55,inset 0 0 0 8px #fff9fc4d;border-radius:inherit}
+.wishes-stage{position:absolute;inset:0;overflow:hidden}
+.wishes-orbit{position:absolute;pointer-events:none;border:1px solid #fff7faaa;border-radius:50%;width:50vw;height:50vw;min-width:350px;min-height:350px;box-shadow:0 0 80px #fffaf6a1;animation:orbit-breathe 11s ease-in-out infinite alternate}
+.orbit-one{top:-42%;left:-9%}.orbit-two{bottom:-55%;right:-10%;animation-delay:-6s}
+.wishes-stars{position:absolute;pointer-events:none;inset:9% 5% auto;text-align:center;color:#fff;letter-spacing:6vw;font-size:1.8rem;text-shadow:0 0 15px #fff,0 0 30px #d99cbb;animation:stars-float 8s ease-in-out infinite alternate}
+.stage-corner{position:absolute;pointer-events:none;bottom:20px;color:#fff9fcd9;font-size:.72rem;letter-spacing:.3em;z-index:3}.stage-corner-left{left:24px}.stage-corner-right{right:24px}
+.floating-wish{position:absolute;top:0;left:0;z-index:2;width:clamp(205px,19vw,256px);height:155px;padding:17px 18px;text-align:left;border:1px solid #fff9fcdf;border-radius:14px;background:linear-gradient(135deg,#fffafced,#f5e2eaea 75%,#e9c7d9dd);box-shadow:0 12px 35px #78516d3d,0 0 0 4px #fff9fc4f,inset 0 0 20px #fff9fbd3;cursor:pointer;color:#5a4051;display:flex;flex-direction:column;align-items:flex-start;transition:box-shadow .22s,filter .22s;overflow:hidden;will-change:transform}
+.floating-wish:hover,.floating-wish:focus-visible,.floating-wish.wish-picked{z-index:8;box-shadow:0 20px 48px #83536a82,0 0 0 5px #fffafba8,0 0 36px #fff}
+.floating-wish.wish-impact{box-shadow:0 16px 42px #9555777a,0 0 0 5px #fff,0 0 30px #fdf5fa}
+.floating-wish-symbol{position:absolute;right:14px;top:10px;color:#be7d9f;font-size:1rem}
+.floating-wish strong{font-family:'Playfair Display',InvitationSerif,serif;font-size:1.18rem;line-height:1.25;max-width:90%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.attendance-pill{display:inline-block;border-radius:99px;padding:4px 9px;background:#e6cbdc;color:#684057;font-size:.67rem;font-weight:700;line-height:1.2;margin-top:8px;white-space:nowrap}
+.attendance-yes{background:#d9e6d8;color:#355a45}.attendance-maybe{background:#eee2c6;color:#755b31}.attendance-no{background:#e8d8df;color:#764b60}
+.floating-wish-preview{font-family:InvitationSerif,serif;font-style:italic;font-size:.87rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:8px;overflow-wrap:anywhere;width:100%}
+.floating-wish-more{font-size:.62rem;color:#986385;letter-spacing:.02em;margin-top:auto}
+.wish-tone-1{background:linear-gradient(130deg,#fffbf8ef,#f9e4e9eb)}.wish-tone-2{background:linear-gradient(135deg,#fafaffee,#e7dfeaee)}.wish-tone-3{background:linear-gradient(135deg,#fff9fdef,#edd3e4e9)}
+.wishes-empty,.wishes-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#744b63;z-index:2;padding:30px}.wishes-empty>span{font-size:3rem;color:#fff;text-shadow:0 0 30px #b16d91}.wishes-empty p{font-family:InvitationSerif,serif;font-size:1.5rem;margin:8px 0}.wishes-empty small{line-height:1.5}
+.wish-detail{position:absolute;z-index:12;right:26px;bottom:30px;width:min(380px,calc(100% - 38px));max-height:min(78%,560px);overflow:auto;padding:27px;border-radius:18px;color:#593e51;background:linear-gradient(145deg,#fffcfbee,#fff3f8f8 61%,#f2dce9f7);box-shadow:0 15px 55px #78516d87,0 0 0 1px #fff;backdrop-filter:blur(18px);animation:detail-rise .35s ease-out}
+.wish-detail-close{position:absolute;right:14px;top:10px;border:0;background:transparent;color:#744d68;font-size:1.7rem;cursor:pointer;line-height:1}
+.wish-detail-flower{display:block;text-align:center;color:#c37b9f;font-size:1.7rem;margin:15px 0 2px;text-shadow:0 0 16px #d68cad}
+.wish-detail h2{font-family:'Playfair Display',InvitationSerif,serif;font-size:1.65rem;margin:0;overflow-wrap:anywhere;text-align:center}
+.wish-detail>.attendance-pill{display:table;margin:12px auto 0}
+.wish-detail-message{font-family:InvitationSerif,serif;font-size:1rem;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere;text-align:center;max-height:240px;overflow:auto;margin:21px 0;border-top:1px solid #dfbdcf;border-bottom:1px solid #dfbdcf;padding:20px 3px}
+.wish-detail-footer{display:block;text-align:center;color:#9a6984;letter-spacing:.11em;font-size:.56rem}
+.wishes-alert{border-radius:8px;background:#fff7f9;color:#8b405e;padding:10px 15px;margin-top:8px}
+.wishes-footer{display:flex;justify-content:space-between;gap:16px;align-items:center;color:#805b71;font-size:.69rem;letter-spacing:.15em;margin-top:18px}.wishes-footer a{color:inherit;text-decoration:none;letter-spacing:0;font-size:.8rem}
+.wish-drawer-scrim{position:fixed;inset:0;background:#3e243077;border:0;z-index:30;cursor:pointer;backdrop-filter:blur(4px)}
+.wish-drawer{position:fixed;right:0;top:0;bottom:0;z-index:31;width:min(420px,100vw);padding:27px 24px;background:#fff8fbee;color:#553c4d;box-shadow:-16px 0 48px #47304466;overflow:auto;backdrop-filter:blur(24px);animation:drawer-enter .3s ease-out}
+.wish-drawer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}.wish-drawer-top h2{font-family:'Playfair Display',InvitationSerif,serif;font-size:1.55rem;margin:7px 0 0}.wish-drawer-top button{border:0;background:transparent;color:#765266;font-size:2rem;line-height:1;cursor:pointer}
+.wish-drawer>p{font-size:.79rem;line-height:1.6;color:#756470}.wish-refresh{margin:5px 0 14px;background:#e9cadb87}
+.wish-drawer-list{display:grid;gap:10px}.wish-drawer-item{border:1px solid #e6ccda;border-radius:12px;background:#fff;padding:13px}.wish-drawer-item>button:first-child{width:100%;display:flex;flex-direction:column;align-items:flex-start;border:0;background:transparent;text-align:left;padding:0;cursor:pointer;color:#513a4b}.wish-drawer-item strong{font-size:.95rem}.wish-drawer-item small{margin:4px 0;color:#a26485}.wish-drawer-item span{font-size:.77rem;line-height:1.45;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:100%}
+.wish-copy{border:0;background:transparent;padding:9px 0 0;color:#865d76;text-decoration:underline;text-underline-offset:3px;font-size:.69rem;cursor:pointer}
+.wish-drawer-note{display:block;margin-top:20px;line-height:1.55;color:#7e6a77}
+.restore-tools{position:fixed;z-index:25;right:12px;bottom:12px;border:1px solid #e8ccda;border-radius:999px;background:#fff9fbc9;color:#624459;opacity:.35;cursor:pointer;padding:8px 12px;font-size:.65rem}.restore-tools:hover,.restore-tools:focus-visible{opacity:1}
+.wishes-clean{padding:0}.wishes-clean .wishes-header,.wishes-clean .wishes-intro,.wishes-clean .wishes-footer,.wishes-clean .wishes-alert{display:none}.wishes-clean .wishes-frame{width:100vw;max-width:none;height:100vh;min-height:0;border:0;border-radius:0;outline:0;margin:0;box-shadow:none}
+@keyframes stage-light{to{transform:rotate(360deg)}}@keyframes wishes-glow{to{transform:translate(12%,8%) scale(1.2)}}@keyframes orbit-breathe{to{transform:scale(1.1) translateY(4%)}}@keyframes stars-float{to{transform:translateY(25px);opacity:.35}}@keyframes detail-rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}@keyframes drawer-enter{from{transform:translateX(35px);opacity:0}to{transform:translateX(0);opacity:1}}
+@media(max-width:950px){.wishes-header{align-items:flex-start;flex-direction:column}.wishes-toolbar{justify-content:flex-start}.wishes-frame{min-height:600px}.wishes-intro{flex-wrap:wrap}}
+@media(max-width:600px){.owner-inbox-compact{flex-direction:column;align-items:stretch}.response-launch{white-space:normal}.wishes-page{padding:18px 10px}.wishes-brand h1{font-size:1.42rem}.wishes-toolbar button{font-size:.7rem;padding:9px 12px}.wishes-frame{height:70vh;min-height:500px;border-radius:16px}.floating-wish{width:195px;height:140px;padding:13px}.floating-wish strong{font-size:1rem}.floating-wish-preview{font-size:.78rem}.wish-detail{right:10px;bottom:10px;max-height:72%;padding:19px}.wishes-footer{flex-wrap:wrap;line-height:1.5}.wishes-clean{padding:0}.wishes-clean .wishes-frame{height:100vh;min-height:0;border-radius:0}}
+@media(prefers-reduced-motion:reduce){.wishes-page:before,.wishes-page:after,.wishes-frame:before,.wishes-orbit,.wishes-stars{animation:none}.wish-detail,.wish-drawer{animation:none}}
 .hero-logo{background:#fdf9ef;box-shadow:0 0 0 7px #e6c9902b,0 0 42px #e4be7599}
 .micro-title,.overline,.honour,.degree-line,.hero-scroll{color:#e8c88c}
 .invitation-hero h2{font-family:InvitationSerif,Georgia,serif;font-weight:400;letter-spacing:-.035em;font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.45}
