@@ -206,6 +206,7 @@ export default function Home() {
     {guest && celebrate && <div className="confetti" aria-hidden="true">{Array.from({ length: 54 }, (_, i) => <i key={i} style={{ "--i": i, "--x": `${(i * 47 + 13) % 100}vw`, "--delay": `${(i * 13) % 17 * .09}s`, "--duration": `${3 + (i % 6) * .28}s` } as React.CSSProperties} />)}</div>}
     {guest && ceremony.musicUrl && <audio id="invitation-audio" src={ceremony.musicUrl.includes(".private.blob.vercel-storage.com/") && code ? `/api/music/${code}` : ceremony.musicUrl} loop preload="auto" />}
     <div className="paper-shell"><article className="invitation-paper" aria-label="Thiệp mời tốt nghiệp">
+      <div className="pink-diffusion-field" aria-hidden="true"><i /><i /><i /><i /></div>
       <GrayParticleField />
       <section className="invitation-hero">
         <div className="floral-corner floral-left" aria-hidden="true">✿ · ✧ · ✿</div><div className="floral-corner floral-right" aria-hidden="true">✿ · ✧ · ✿</div>
