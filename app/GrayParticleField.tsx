@@ -5,11 +5,11 @@ import { useEffect, useRef } from "react";
 type Particle = { x: number; y: number; size: number; phase: number; speed: number; drift: number; tone: number };
 
 const tones = [
-  [116, 128, 143], // pewter silver
-  [145, 157, 171],
-  [174, 185, 198],
-  [204, 213, 223],
-  [231, 236, 242], // pale silver glint
+  [174, 190, 208],
+  [187, 202, 218],
+  [202, 215, 228],
+  [215, 226, 236],
+  [231, 239, 246],
 ];
 
 export default function GrayParticleField() {
@@ -32,12 +32,23 @@ export default function GrayParticleField() {
       sprite.width = sprite.height = radius * 2;
       const painter = sprite.getContext("2d")!;
       const glow = painter.createRadialGradient(radius, radius, 0, radius, radius, radius);
-      glow.addColorStop(0, `rgba(${shade.join(",")},1)`);
-      glow.addColorStop(.16, `rgba(${shade.join(",")},.72)`);
-      glow.addColorStop(.43, `rgba(${shade.join(",")},.22)`);
+      glow.addColorStop(0, "rgba(255,255,255,1)");
+      glow.addColorStop(.12, `rgba(${shade.join(",")},.98)`);
+      glow.addColorStop(.29, "rgba(247,251,255,.86)");
+      glow.addColorStop(.55, `rgba(${shade.join(",")},.26)`);
       glow.addColorStop(1, `rgba(${shade.join(",")},0)`);
       painter.fillStyle = glow;
       painter.fillRect(0, 0, sprite.width, sprite.height);
+      if (size > 0) {
+        painter.strokeStyle = "rgba(255,255,255,.82)";
+        painter.lineWidth = size === 2 ? .9 : .6;
+        painter.beginPath();
+        painter.moveTo(radius, radius * .28);
+        painter.lineTo(radius, radius * 1.72);
+        painter.moveTo(radius * .28, radius);
+        painter.lineTo(radius * 1.72, radius);
+        painter.stroke();
+      }
       return sprite;
     }));
     // Repeatable layout avoids a noticeable jump when an invitation is reopened.
@@ -77,7 +88,7 @@ export default function GrayParticleField() {
         // A steady fall; each particle returns above the top after leaving the bottom.
         const y = (particle.y + t * particle.speed) % (height + 28) - 14;
         const sprite = glows[tone][particle.size];
-        context.globalAlpha = .4 + pulse * .56;
+        context.globalAlpha = .5 + pulse * .5;
         context.drawImage(sprite, x - sprite.width / 2, y - sprite.height / 2);
       }
       context.globalAlpha = 1;
