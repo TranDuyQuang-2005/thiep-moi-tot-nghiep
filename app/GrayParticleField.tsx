@@ -5,11 +5,11 @@ import { useEffect, useRef } from "react";
 type Particle = { x: number; y: number; size: number; phase: number; speed: number; drift: number; tone: number };
 
 const tones = [
-  [64, 72, 82],   // charcoal gray
-  [94, 104, 115], // slate gray
-  [132, 142, 152],
-  [176, 184, 192],
-  [200, 205, 211], // silver, kept visible on the pale paper
+  [116, 128, 143], // pewter silver
+  [145, 157, 171],
+  [174, 185, 198],
+  [204, 213, 223],
+  [231, 236, 242], // pale silver glint
 ];
 
 export default function GrayParticleField() {
