@@ -219,7 +219,7 @@ export default function Home() {
         </form> : <div className="rsvp-preview"><p className="preview-note">Mẫu xác nhận dành cho khách mời. Biểu mẫu sẽ hoạt động khi họ mở link thiệp riêng.</p><label>Tên của bạn<input disabled placeholder="Tên khách mời" /></label><label>Bạn sẽ tham dự chứ?<select disabled><option>Mình sẽ tham dự</option></select></label><label>Gửi lời chúc<textarea disabled rows={3} placeholder="Một lời nhắn dành cho ngày tốt nghiệp..." /></label><button className="primary-action" disabled>Gửi xác nhận và lời chúc ♥</button></div>}
         {replyNotice && <p className="reply-notice" role="status">{replyNotice}</p>}
       </section>
-      <footer className="thank-you"><span>✦</span><h3>Cảm ơn bạn!</h3><p>Sự đồng hành của bạn khiến ngày tốt nghiệp này thêm trọn vẹn. Mong được gặp bạn trong khoảnh khắc đặc biệt ấy.</p><small>HỌC VIỆN HÀNG KHÔNG VIỆT NAM · {year || "2026"}</small></footer>
+      <footer className="thank-you"><span>✦</span><h3>Cảm ơn bạn!</h3><p style={{ maxWidth: "50ch", textWrap: "pretty" }}>Sự đồng hành của bạn khiến ngày tốt nghiệp này thêm trọn vẹn. Mong được gặp bạn trong khoảnh khắc <span style={{ whiteSpace: "nowrap" }}>đặc biệt ấy.</span></p><p style={{ fontFamily: "InvitationSans, sans-serif", fontStyle: "normal", fontSize: ".86rem", maxWidth: "100%", margin: "0 auto 24px", textWrap: "balance" }}><strong>Thông tin liên hệ: <span style={{ whiteSpace: "nowrap" }}>0363922129 (Na)</span> - <span style={{ whiteSpace: "nowrap" }}>0976016941 (Chị của Na-Mi)</span></strong></p><small>HỌC VIỆN HÀNG KHÔNG VIỆT NAM · {year || "2026"}</small></footer>
     </article></div>
   </main>;
 }
