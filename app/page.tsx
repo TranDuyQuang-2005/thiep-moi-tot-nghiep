@@ -186,7 +186,7 @@ export default function Home() {
         <div className="hero-logo"><img src="/vaa-logo.png" alt="Logo Học viện Hàng không Việt Nam" /></div>
         <p className="overline">THƯ MỜI THAM DỰ</p>
         <h2>Lễ tốt nghiệp của<br /><span className="graduate-name" style={{ "--name-length": Math.min(60, (ceremony.graduate.trim() || "Tên người tốt nghiệp").length) } as React.CSSProperties}>{ceremony.graduate.trim() || "Tên người tốt nghiệp"}</span></h2>
-        <p className="honour">HÂN HẠNH MỜI</p><p className="recipient-name">{recipient.trim() || "Tên khách mời"}</p>
+        <p className="honour">HÂN HẠNH KÍNH MỜI</p><p className="recipient-name">{recipient.trim() || "Tên khách mời"}</p>
         <div className="dotted-rule" />
         <p className="hero-date">{ceremony.date ? `${pad(day)}/${pad(month)}/${year}` : "Ngày tổ chức"}<span> · </span>{ceremony.time ? `${ceremony.time} giờ` : "Giờ bắt đầu"}</p>
         <p className="hero-location">{ceremony.venue.trim() || "Địa điểm tổ chức"}<br />{ceremony.address.trim() || "Địa chỉ buổi lễ"}</p>
